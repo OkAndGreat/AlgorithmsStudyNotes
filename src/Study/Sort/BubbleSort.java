@@ -9,6 +9,7 @@ import java.util.Date;
  * 八万个数据排序
  * 排序前的时间是=2021-02-17 23:53:14
  * 排序后的时间是=2021-02-17 23:53:24
+ *10秒左右
  */
 public class BubbleSort {
     public static void main(String[] args) {

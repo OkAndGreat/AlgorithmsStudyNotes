@@ -10,8 +10,9 @@ public class BinarySearch {
         binarySearch(arr, 0, arr.length - 1, 1, resultsList);
         Object[] resultArray = resultsList.toArray();
         Arrays.sort(resultArray);
+        int[][] test={{1,2,3,4},{4,5,6,7}};
+        //System.out.println(Arrays.deepToString(test));
         System.out.println(Arrays.toString(resultArray));
-        //
 
     }
 

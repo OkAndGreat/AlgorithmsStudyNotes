@@ -1,7 +1,5 @@
 package Study.Recursion;
 
-import java.util.ArrayList;
-
 /**
  * 问题描述:在8×8格的国际象棋上摆放8个皇后，使其不能互相攻击，即任意两个皇后都不能处于同一行、同一列或同一斜线上，问有多少种摆法。
  */
@@ -9,7 +7,6 @@ public class EightQueens {
     //数组的下标表示行标 对应的值表示列标 Queen[4]=4 表示第四个皇后在第4列上
     static int[] Queen = new int[8];
     static int cnt = 0;
-    private static ArrayList<String> strings=new ArrayList<>();
 
 
     public static void main(String[] args) {
@@ -31,24 +28,6 @@ public class EightQueens {
         }
     }
 
-    //每调用一次cnt()则说明找到一种解法
-    private static void cnt() {
-        cnt++;
-        for(int i=7;i>-1;i--){
-            String s=new String();
-            for(int j=0;j<Queen.length;j++){
-                if (j==Queen[i]){
-                    s=s+"Q";
-                }else {
-                    s=s+".";
-                }
-            }
-            System.out.println(s+"\n");
-        }
-        System.out.println("===============================\n");
-
-    }
-
     //如果符合条件返回true 不符合条件返回false
     public static boolean judge(int n) {
         for (int i = 0; i < n; i++) {
@@ -60,5 +39,21 @@ public class EightQueens {
         return true;
     }
 
+    //每调用一次cnt()则说明找到一种解法
+    private static void cnt() {
+        cnt++;
+        for (int i = 7; i > -1; i--) {
+            StringBuilder s = new StringBuilder();
+            for (int j = 0; j < Queen.length; j++) {
+                if (j == Queen[i]) {
+                    s.append("Q");
+                } else {
+                    s.append(".");
+                }
+            }
+            System.out.println(s + "\n");
+        }
+        System.out.println("===============================\n");
 
+    }
 }

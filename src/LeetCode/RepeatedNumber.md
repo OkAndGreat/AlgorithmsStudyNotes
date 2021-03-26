@@ -27,6 +27,7 @@ package LeetCode;
 /**
  * HashMap法
  */
+```
 class Solution {
     public int findRepeatNumber(int[] nums) {
         int temp;
@@ -43,10 +44,11 @@ class Solution {
         return -1;
     }
 }
-
+```
 /**
  * 原地置换法
  */
+```
 class Solution {
     public int findRepeatNumber(int[] nums) {
         int temp;
@@ -64,3 +66,4 @@ class Solution {
         return -1;
     }
 }
+```

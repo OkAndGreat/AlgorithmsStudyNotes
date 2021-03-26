@@ -1,5 +1,8 @@
 package LeetCode;
 
+import java.util.LinkedList;
+import java.util.Stack;
+
 /**
  * 不使用任何内建的哈希表库设计一个哈希集合（HashSet）。
  * 实现 MyHashSet 类：
@@ -36,6 +39,7 @@ class MyHashSet {
             //Careful The Array of headNode is Null,needs to be initalized!
             headNode[i] = new Node();
             headNode[i].value = i;
+            Stack<Integer> integers = new Stack<>();
         }
     }
 

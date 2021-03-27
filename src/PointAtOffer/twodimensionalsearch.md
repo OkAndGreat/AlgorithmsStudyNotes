@@ -37,7 +37,7 @@
  * 方法一暴力查找 有优化空间
  * 比如发现当前行的当前数大于要查找的数时可以跳到下一行
  */
-```
+```java
 class Solution {
     public boolean findNumberIn2DArray(int[][] matrix, int target) {
         if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
@@ -58,7 +58,7 @@ class Solution {
 /**
  * 将数组矩阵逆时针旋转45°可将该数组矩阵看成一个二叉搜索树
  */
-```
+```java
 class Solution {
     public boolean findNumberIn2DArray(int[][] matrix, int target) {
         if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {

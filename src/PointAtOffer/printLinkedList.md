@@ -21,7 +21,7 @@
 关键！！！！！！！！！！！  
 看到类似反转，倒转等倒着来的词要想到stack  
 因为stack有先进后出的特性！
-```
+```java
 class Solution {
     public int[] reversePrint(ListNode head) {
         Stack<ListNode> stack = new Stack<ListNode>();
@@ -42,7 +42,7 @@ class Solution {
 //这个是最直接显然的想法  
 //执行用时： 0 ms , 在所有 Java 提交中击败了 100.00% 的用户  
 //内存消耗： 38.8 MB , 在所有 Java 提交中击败了 91.92% 的用户
-```
+```java
 class Solution {
 public int[] reversePrint(ListNode head) {
 int count = 0;

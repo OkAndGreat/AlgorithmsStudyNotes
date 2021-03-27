@@ -30,7 +30,7 @@
  */
 
 动态规划解法
-```
+```java
 class Solution {
     public int fib(int n) {
         int a = 0, b = 1, sum;
@@ -45,7 +45,7 @@ class Solution {
 ```
 
 递归解法
-```
+```java
 class Solution {
     public int fib(int n) {
         return fun(n)%1000000007;

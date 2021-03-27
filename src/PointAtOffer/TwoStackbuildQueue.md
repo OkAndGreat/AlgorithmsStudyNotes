@@ -29,7 +29,7 @@
 
 利用stack先进后出的特点 俩次入栈出栈可实现queue的特点  
 
-```
+```java
 class CQueue {
     Stack<Integer> stack1;
     Stack<Integer> stack2;

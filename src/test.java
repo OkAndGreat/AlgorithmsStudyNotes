@@ -1,28 +1,68 @@
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
+
 public class test {
     public static void main(String[] args) {
         Solution solution = new Solution();
-        char[][] board={{'a','b'},{'c','d'}};
-        System.out.println(solution.exist(board,"abcd"));
+        System.out.println(solution.movingCount(3,2,17));
     }
 }
-//DFS
+
 class Solution {
-    public boolean exist(char[][] board, String word) {
-        char[] words = word.toCharArray();
-        for(int i = 0; i < board.length; i++) {
-            for(int j = 0; j < board[0].length; j++) {
-                if(dfs(board, words, i, j, 0)) return true;
+    //使用一个方向数组可以简化向上向下向左向右行动的代码
+    int[][] next = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+    //book数组用来标记该点是否已经走过
+    int[][] book;
+    int k;
+    Stack<location> stack = new Stack<location>();
+
+    public int movingCount(int m, int n, int k) {
+        this.k = k;
+        book=new int[m][n];
+        int result = 0;
+        stack.push(new location(0, 0));
+        book[0][0]=1;
+        while (!stack.isEmpty()) {
+            location temp = stack.pop();
+            if (judge(temp.x,temp.y)) {
+                result++;
+                for (int l = 0; l <= 3; l++) {
+                    int tx=temp.x + next[l][0];
+                    int ty=temp.y + next[l][1];
+                    if(tx>=m||ty>=n||tx<0||ty<0){
+                        continue;
+                    }
+                    if(book[tx][ty]==0){
+                        book[tx][ty]=1;
+                        stack.push(new location(tx,ty));
+                    }
+                }
             }
         }
-        return false;
+        return result;
     }
-    boolean dfs(char[][] board, char[] word, int i, int j, int k) {
-        if(i >= board.length || i < 0 || j >= board[0].length || j < 0 || board[i][j] != word[k]) return false;
-        if(k == word.length - 1) return true;
-        board[i][j] = '\0';
-        boolean res = dfs(board, word, i + 1, j, k + 1) || dfs(board, word, i - 1, j, k + 1) ||
-                dfs(board, word, i, j + 1, k + 1) || dfs(board, word, i , j - 1, k + 1);
-        board[i][j] = word[k];
-        return res;
+
+    boolean judge(int x, int y) {
+        int sum = 0;
+        while (x != 0) {
+            sum += x % 10;
+            x /= 10;
+        }
+        while (y != 0) {
+            sum += y % 10;
+            y /= 10;
+        }
+        return sum <= k;
+    }
+}
+
+class location {
+    int x;
+    int y;
+
+    public location(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 }

@@ -1,4 +1,4 @@
-package Study.LinkList;
+package Study.LinkedList;
 
 /**
  * 问题描述:

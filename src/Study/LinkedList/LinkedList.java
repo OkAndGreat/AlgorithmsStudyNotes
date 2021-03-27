@@ -1,4 +1,4 @@
-package Study.LinkList;
+package Study.LinkedList;
 
 public class LinkedList {
     public static void main(String[] args) {

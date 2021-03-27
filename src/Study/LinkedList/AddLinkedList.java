@@ -1,4 +1,4 @@
-package Study.LinkList;
+package Study.LinkedList;
 /**
  * 将俩个有序的链表相加成为一个有序的链表
  * 第一种方法:将其中一个链表的数据挨个取出并复制然后通过另一个链表的addByOrder方法加入

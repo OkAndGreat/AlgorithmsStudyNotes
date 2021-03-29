@@ -47,7 +47,7 @@ package PointAtOffer;
  * }
  */
 
-```
+```java
 class Solution {
     HashMap<Integer, Integer> map = new HashMap<>();//标记中序遍历
     int[] preorder;//保留的先序遍历，方便递归时依据索引查看先序遍历的值
@@ -82,7 +82,7 @@ class Solution {
 }
 ```
 
-```
+```java
 /**
  * Definition for a binary tree node.
  * public class TreeNode {

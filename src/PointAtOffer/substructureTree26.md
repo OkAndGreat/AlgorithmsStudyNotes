@@ -36,3 +36,22 @@
  * 链接：https://leetcode-cn.com/problems/shu-de-zi-jie-gou-lcof
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
+   
+````java
+class Solution {
+    public boolean isSubStructure(TreeNode A, TreeNode B) {
+        //一定记得首先判断值给的是否为空！！！
+        return (A != null && B != null) && (recur(A, B) || isSubStructure(A.left, B) || isSubStructure(A.right, B));
+    }
+    //对于A和B的取值有四种情况：
+    //1.A==nullB==null 应该返回true
+    //2.A==nullB！==null 返回false
+    //3.A！=nullB==null  返回true
+    //4.A和B都不为null 此时若A和B的值不相同则返回false，相同则返回recur(A.left, B.left) && recur(A.right, B.right)
+    boolean recur(TreeNode A, TreeNode B) {
+        if(B == null) return true;
+        if(A == null || A.val != B.val) return false;
+        return recur(A.left, B.left) && recur(A.right, B.right);
+    }
+}
+````

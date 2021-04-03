@@ -30,6 +30,7 @@
  * }
  */
 //看到反转很容易想到栈
+ //注意链表可能产生环
 class Solution {
     public ListNode reverseList(ListNode head) {
         if(head==null){

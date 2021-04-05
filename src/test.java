@@ -4,30 +4,33 @@ import java.util.Stack;
 
 public class test {
     public static void main(String[] args) {
+        Solution solution = new Solution();
+        System.out.println(solution.myPow(2.00000, 10));
     }
 }
 
 
-
 class Solution {
-    public int[] exchange(int[] nums) {
-        if(nums.length==1) return nums;
-        int temp;
-        int left=0;
-        int right=nums.length-1;
-        while(true){
-            while(nums[left]%2!=0&&left!=right){
-                left++;
-            }
-            if(left==right) break;
-            while(nums[right]%2==0&&left!=right){
-                right--;
-            }
-            if(left==right) break;
-            nums[right]=nums[right]+nums[left];
-            nums[left]=nums[right]-nums[left];
-            nums[right]=nums[right]-nums[left];
+    public double myPow(double x, int n) {
+        if (n == 0) return 1;
+        if (n > 0) {
+            return fun(x, n, x);
+        } else {
+            return fun(1.0 / x, -n, 1.0 / x);
         }
-        return nums;
+    }
+
+    double fun(double x, int n, double num) {
+        if (n == 0) return x;
+        if (n == 1) return x * num;
+        if(n==2) return x*num*num;
+        int cnt = 1;
+        double store = num;
+        while (cnt * 2 <= n) {
+            x *= num;
+            num *= num;
+            cnt *= 2;
+        }
+        return fun(x, n - cnt, store);
     }
 }

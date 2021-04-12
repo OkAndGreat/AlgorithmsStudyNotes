@@ -1,18 +1,35 @@
-import java.util.*;
+从上到下按层打印二叉树，同一层的节点按从左到右的顺序打印，每一层打印到一行。
 
-public class test {
-    public static void main(String[] args) {
-        Solution solution = new Solution();
-        TreeNode root = new TreeNode(3);
-        root.left = new TreeNode(9);
-        System.out.println(Arrays.deepToString(solution.levelOrder(root).toArray()));
-    }
-}
+例如:
+给定二叉树:[3,9,20,null,null,15,7],
 
+    3
+
+/ \
+9 20 /  \
+15 7 返回其层次遍历结果：
+
+[
+[3],
+[9,20],
+[15,7]
+]
+
+提示：
+
+节点总数 <= 1000 注意：本题与主站 102 题相同：https://leetcode-cn.com/problems/binary-tree-level-order-traversal/
+
+通过次数90,475提交次数132,036
+
+来源：力扣（LeetCode） 链接：https://leetcode-cn.com/problems/cong-shang-dao-xia-da-yin-er-cha-shu-ii-lcof
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+
+````java
+//使用队列,一个HashMap记录每个Node所对应的层数  我的解法
 class Solution {
     public List<List<Integer>> levelOrder(TreeNode root) {
         List<List<Integer>> result = new ArrayList<List<Integer>>();
-        HashMap<TreeNode,Integer> hash = new HashMap();
+        HashMap<TreeNode, Integer> hash = new HashMap();
         if (root == null) return result;
         hash.put(root, 0);
         LinkedList<TreeNode> nodes = new LinkedList();
@@ -38,12 +55,5 @@ class Solution {
     }
 }
 
-class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
-
-    TreeNode(int x) {
-        val = x;
-    }
-}
+//
+````

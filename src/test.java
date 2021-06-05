@@ -3,22 +3,33 @@ import java.util.*;
 public class test {
     public static void main(String[] args) {
         Solution solution = new Solution();
-       HashMap hashMap=new HashMap();
-       hashMap.put(1,1);
-    }
-}
-
-class Solution {
-    public String reverseLeftWords(String s, int n) {
-//        StringBuilder sb=new StringBuilder();
-//        sb.append(s.substring(n-1,s.length()-1));
-//        sb.append(s.substring(0,n-1));
-
-        System.out.println(getManIn3(1,3,2));
-        return "sb.toString()";
+        int[] nums = {1, 2};
+        System.out.println(Arrays.deepToString(solution.permute(nums).toArray()));
     }
 
-    int getManIn3(int a,int b,int c){
-        return a>b?(Math.max(a, c)):(Math.max(b, c));
+
+    static class Solution {
+        List<List<Integer>> res;
+        List<Integer> temp;
+
+        public List<List<Integer>> permute(int[] nums) {
+            res = new ArrayList();
+            temp = new ArrayList();
+            dfs(0, temp, nums);
+            return res;
+        }
+
+        void dfs(int i, List<Integer> temp, int[] nums) {
+            if (i == nums.length) {
+                res.add(new ArrayList<>(temp));
+                return;
+            }
+            for (int j = 0; j < nums.length; j++)
+                if (!temp.contains(nums[j])) {
+                    temp.add(nums[j]);
+                    dfs(i + 1, temp, nums);
+                    temp.remove(temp.indexOf(nums[j]));
+                }
+        }
     }
 }

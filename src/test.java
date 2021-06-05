@@ -3,8 +3,8 @@ import java.util.*;
 public class test {
     public static void main(String[] args) {
         Solution solution = new Solution();
-
-        solution.reverseLeftWords("1",2);
+       HashMap hashMap=new HashMap();
+       hashMap.put(1,1);
     }
 }
 

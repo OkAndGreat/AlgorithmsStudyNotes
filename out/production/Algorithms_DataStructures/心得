@@ -1,0 +1,36 @@
+1.做题前的边界检查很重要！
+
+2.看下面一段代码
+
+````java
+class Solution {
+    List<List<Integer>> res;
+    List<Integer> temp;
+
+    public List<List<Integer>> permute(int[] nums) {
+        res = new ArrayList();
+        temp = new ArrayList();
+        dfs(0, temp, nums);
+        return res;
+    }
+
+    void dfs(int i, List<Integer> temp, int[] nums) {
+        if (i == nums.length) {
+            res.add(new ArrayList<>(temp));
+            return;
+        }
+        for (int j = 0; j < nums.length; j++)
+            if (!temp.contains(nums[j])) {
+                temp.add(nums[j]);
+                dfs(i + 1, temp, nums);
+                temp.remove(temp.indexOf(nums[j]));
+            }
+    }
+}
+````
+对于 
+res.add(new ArrayList<>(temp));
+如果改成
+res.add(temp);
+会出错
+已经是第二次出错了！！

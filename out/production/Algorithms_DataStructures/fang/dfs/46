@@ -13,14 +13,36 @@
 输入：nums = [1]
 输出：[[1]]
 
-
 提示：
 
-1 <= nums.length <= 6
--10 <= nums[i] <= 10
-nums 中的所有整数 互不相同
-通过次数332,877提交次数426,950
+1 <= nums.length <= 6 -10 <= nums[i] <= 10 nums 中的所有整数 互不相同 通过次数332,877提交次数426,950
 
-来源：力扣（LeetCode）
-链接：https://leetcode-cn.com/problems/permutations
+来源：力扣（LeetCode） 链接：https://leetcode-cn.com/problems/permutations
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+
+````java
+class Solution {
+    List<List<Integer>> res;
+    List<Integer> temp;
+
+    public List<List<Integer>> permute(int[] nums) {
+        res = new ArrayList();
+        temp = new ArrayList();
+        dfs(0, temp, nums);
+        return res;
+    }
+
+    void dfs(int i, List<Integer> temp, int[] nums) {
+        if (i == nums.length) {
+            res.add(new ArrayList<>(temp));
+            return;
+        }
+        for (int j = 0; j < nums.length; j++)
+            if (!temp.contains(nums[j])) {
+                temp.add(nums[j]);
+                dfs(i + 1, temp, nums);
+                temp.remove(temp.indexOf(nums[j]));
+            }
+    }
+}
+````

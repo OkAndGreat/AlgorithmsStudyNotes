@@ -3,38 +3,42 @@ import java.util.*;
 public class test {
     public static void main(String[] args) {
         Solution solution = new Solution();
-        String S="123";
-        solution.permutation(S);
+        String S="34123";
+        char[] chars = S.toCharArray();
+        Arrays.sort(chars);
+        for(char c:chars) System.out.println(c);
+        //solution.permutation(S);
     }
 
 }
 
 class Solution {
     ArrayList<String> res;
-    int curLength=0;
+    //0表示还未放 1则相反
     int[] vis;
     StringBuilder sb=new StringBuilder();
     public String[] permutation(String S) {
-        res=new ArrayList<>();
+        res=new ArrayList();
         vis=new int[S.length()];
-        dfs(0,S);
-        String[] str=new String[res.size()];
-        for(int i=0;i<res.size();i++) str[i]= res.get(i);
-        return str;
+        char[] chars=S.toCharArray();
+        Arrays.sort(chars);
+        dfs(0,chars);
+        return res.toArray(new String[res.size()]);
     }
 
-    void dfs(int i,String s){
-        if(i==s.length()){
+    void dfs(int idx,char[] chars){
+        if(idx==chars.length){
             res.add(sb.toString());
             return;
         }
-        for(int j=0;j<s.length();j++){
-            if(vis[j]==1) continue;
-            vis[j]=1;
-            sb.append(s.charAt(j));
-            dfs(i+1,s);
+        for(int i=0;i<chars.length;i++){
+            //考虑重复字符串
+            if(vis[i]==1||(chars[i]==chars[i-1]&&vis[i-1]==0)) continue;
+            sb.append(chars[i]);
+            vis[i]=1;
+            dfs(idx+1,chars);
+            vis[i]=0;
             sb.deleteCharAt(sb.toString().length()-1);
-            vis[j]=0;
         }
     }
 }

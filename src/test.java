@@ -1,45 +1,49 @@
 import java.util.*;
 
 public class test {
+    StringBuilder sb=new StringBuilder();
     public static void main(String[] args) {
         Solution solution = new Solution();
-        String S="34123";
-        char[] chars = S.toCharArray();
-        Arrays.sort(chars);
-        for(char c:chars) System.out.println(c);
-        //solution.permutation(S);
+        System.out.println(solution.getPermutation(4,9));
     }
 
 }
 
 class Solution {
-    ArrayList<String> res;
-    //0表示还未放 1则相反
+    String res;
+    int cnt=0;
+    int k;
     int[] vis;
     StringBuilder sb=new StringBuilder();
-    public String[] permutation(String S) {
-        res=new ArrayList();
-        vis=new int[S.length()];
-        char[] chars=S.toCharArray();
-        Arrays.sort(chars);
-        dfs(0,chars);
-        return res.toArray(new String[res.size()]);
+    public String getPermutation(int n, int k) {
+        this.k=k;
+        vis=new int[n];
+        for(int i=1;i<=n;i++) sb.append(i);
+        String s=sb.toString();
+        sb.delete(0,sb.toString().length());
+        dfs(0,s);
+        return res;
     }
 
-    void dfs(int idx,char[] chars){
-        if(idx==chars.length){
-            res.add(sb.toString());
+    void dfs(int i,String s){
+        if(i==s.length()){
+            cnt++;
+            if(cnt==k) res=sb.toString();
             return;
         }
-        for(int i=0;i<chars.length;i++){
-            //考虑重复字符串
-            if(vis[i]==1||(chars[i]==chars[i-1]&&vis[i-1]==0)) continue;
-            sb.append(chars[i]);
-            vis[i]=1;
-            dfs(idx+1,chars);
-            vis[i]=0;
+        for(int j=0;j<s.length();j++){
+            if(vis[j]==1||cnt==k) continue;
+            vis[j]=1;
+            sb.append(s.charAt(j));
+            dfs(i+1,s);
             sb.deleteCharAt(sb.toString().length()-1);
+            vis[j]=0;
         }
+    }
+
+    int getCount(int n){
+        if(n==1) return 1;
+        return n*getCount(n-1);
     }
 }
 

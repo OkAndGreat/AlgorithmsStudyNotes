@@ -10,14 +10,42 @@
 输出：["ab", "ba"]
 提示:
 
-字符都是英文字母。
-字符串长度在[1, 9]之间。
-通过次数13,753提交次数19,177
+字符都是英文字母。 字符串长度在[1, 9]之间。 通过次数13,753提交次数19,177
 
-来源：力扣（LeetCode）
-链接：https://leetcode-cn.com/problems/permutation-ii-lcci
+来源：力扣（LeetCode） 链接：https://leetcode-cn.com/problems/permutation-ii-lcci
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 
 ````java
+class Solution {
+    ArrayList<String> res;
+    //0表示还未放 1则相反
+    int[] vis;
+    StringBuilder sb = new StringBuilder();
 
+    public String[] permutation(String S) {
+        res = new ArrayList();
+        vis = new int[S.length()];
+        char[] chars = S.toCharArray();
+        Arrays.sort(chars);
+        dfs(0, chars);
+        return res.toArray(new String[res.size()]);
+    }
+
+    void dfs(int idx, char[] chars) {
+        if (idx == chars.length) {
+            res.add(sb.toString());
+            return;
+        }
+        for (int i = 0; i < chars.length; i++) {
+            //考虑重复字符串
+            //注意考虑数组越界
+            if (vis[i] == 1 || (i > 0 && chars[i] == chars[i - 1] && vis[i - 1] == 0)) continue;
+            sb.append(chars[i]);
+            vis[i] = 1;
+            dfs(idx + 1, chars);
+            vis[i] = 0;
+            sb.deleteCharAt(sb.toString().length() - 1);
+        }
+    }
+}
 ````

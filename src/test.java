@@ -3,39 +3,31 @@ import java.util.*;
 public class test {
     public static void main(String[] args) {
         Solution solution = new Solution();
-        List<String> strings = solution.letterCasePermutation("9z7u");
-        for (String s : strings
-        ) {
-            System.out.println(s);
-        }
+        String[] strs=new String[]{"1"};
 
     }
 
 }
 
 class Solution {
-    List<String> res = new ArrayList<>();
-
-    public List<String> letterCasePermutation(String s) {
-        char[] chars = s.toCharArray();
-        fun(chars, 0);
+    List<String> res = new ArrayList();
+    StringBuilder sb = new StringBuilder();
+    String[] strs = new String[]{"abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+    public List<String> letterCombinations(String digits) {
+        dfs(digits,0);
         return res;
     }
 
-    void fun(char[] chars, int idx) {
-        if (idx == chars.length) {
-            res.add(new String(chars));
+    void dfs(String str,int idx){
+        if(idx==str.length()){
+            res.add(sb.toString());
             return;
         }
-        if (Character.isLetter(chars[idx])) {
-            fun(chars, idx + 1);
-            if (Character.isLowerCase(chars[idx])) {
-                chars[idx] = Character.toUpperCase(chars[idx]);
-            } else {
-                chars[idx] = Character.toLowerCase(chars[idx]);
-            }
+        for(int i = 0; i<strs[Integer.parseInt(String.valueOf(str.charAt(idx)))-2].length(); i++){
+            sb.append(strs[Integer.parseInt(String.valueOf(str.charAt(idx)))-2].charAt(i));
+            dfs(str,idx+1);
+            sb.deleteCharAt(sb.toString().length()-1);
         }
-        fun(chars, idx + 1);
     }
 }
 

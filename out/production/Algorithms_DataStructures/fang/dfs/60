@@ -10,31 +10,165 @@
 "321"
 给定n 和k，返回第k个排列。
 
-
 示例 1：
 
-输入：n = 3, k = 3
-输出："213"
+输入：n = 3, k = 3 输出："213"
 示例 2：
 
-输入：n = 4, k = 9
-输出："2314"
+输入：n = 4, k = 9 输出："2314"
 示例 3：
 
-输入：n = 3, k = 1
-输出："123"
-
+输入：n = 3, k = 1 输出："123"
 
 提示：
 
-1 <= n <= 9
-1 <= k <= n!
+1 <= n <= 9 1 <= k <= n!
 通过次数81,989提交次数157,129
 
-来源：力扣（LeetCode）
-链接：https://leetcode-cn.com/problems/permutation-sequence
+来源：力扣（LeetCode） 链接：https://leetcode-cn.com/problems/permutation-sequence
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 
 ````java
+//我的代码
+//和正常dfs步骤相同 定义了一个变量记录已经得到的解的个数
+class Solution {
+    String res;
+    int cnt = 0;
+    int k;
+    int[] vis;
+    StringBuilder sb = new StringBuilder();
 
+    public String getPermutation(int n, int k) {
+        this.k = k;
+        vis = new int[n];
+        for (int i = 1; i <= n; i++) sb.append(i);
+        String s = sb.toString();
+        sb.delete(0, sb.toString().length());
+        dfs(0, s);
+        return res;
+    }
+
+    void dfs(int i, String s) {
+        if (i == s.length()) {
+            cnt++;
+            if (cnt == k) res = sb.toString();
+            return;
+        }
+        for (int j = 0; j < s.length(); j++) {
+            if (vis[j] == 1 || cnt == k) continue;
+            vis[j] = 1;
+            sb.append(s.charAt(j));
+            dfs(i + 1, s);
+            sb.deleteCharAt(sb.toString().length() - 1);
+            vis[j] = 0;
+        }
+    }
+}
+
+
+//大佬解法
+
+public class Solution {
+
+    /**
+     * 记录数字是否使用过
+     */
+    private boolean[] used;
+
+    /**
+     * 阶乘数组
+     */
+    private int[] factorial;
+
+    private int n;
+    private int k;
+
+    public String getPermutation(int n, int k) {
+        this.n = n;
+        this.k = k;
+        calculateFactorial(n);
+
+        // 查找全排列需要的布尔数组
+        used = new boolean[n + 1];
+        Arrays.fill(used, false);
+
+        StringBuilder path = new StringBuilder();
+        dfs(0, path);
+        return path.toString();
+    }
+
+
+    /**
+     * @param index 在这一步之前已经选择了几个数字，其值恰好等于这一步需要确定的下标位置
+     * @param path
+     */
+    private void dfs(int index, StringBuilder path) {
+        if (index == n) {
+            return;
+        }
+
+        // 计算还未确定的数字的全排列的个数，第 1 次进入的时候是 n - 1
+        int cnt = factorial[n - 1 - index];
+        for (int i = 1; i <= n; i++) {
+            if (used[i]) {
+                continue;
+            }
+            if (cnt < k) {
+                k -= cnt;
+                continue;
+            }
+            path.append(i);
+            used[i] = true;
+            dfs(index + 1, path);
+            // 注意 1：不可以回溯（重置变量），算法设计是「一下子来到叶子结点」，没有回头的过程
+            // 注意 2：这里要加 return，后面的数没有必要遍历去尝试了
+            return;
+        }
+    }
+
+    /**
+     * 计算阶乘数组
+     *
+     * @param n
+     */
+    private void calculateFactorial(int n) {
+        factorial = new int[n + 1];
+        factorial[0] = 1;
+        for (int i = 1; i <= n; i++) {
+            factorial[i] = factorial[i - 1] * i;
+        }
+    }
+}
+
+
+public class Solution {
+
+    public String getPermutation(int n, int k) {
+        // 注意：相当于在 n 个数字的全排列中找到下标为 k - 1 的那个数，因此 k 先减 1
+        k--;
+
+        int[] factorial = new int[n];
+        factorial[0] = 1;
+        // 先算出所有的阶乘值
+        for (int i = 1; i < n; i++) {
+            factorial[i] = factorial[i - 1] * i;
+        }
+
+        // 这里使用数组或者链表都行
+        List<Integer> nums = new LinkedList<>();
+        for (int i = 1; i <= n; i++) {
+            nums.add(i);
+        }
+
+        StringBuilder stringBuilder = new StringBuilder();
+
+        // i 表示剩余的数字个数，初始化为 n - 1
+        for (int i = n - 1; i >= 0; i--) {
+            int index = k / factorial[i];
+            stringBuilder.append(nums.remove(index));
+            k -= index * factorial[i];
+        }
+        return stringBuilder.toString();
+    }
+}
 ````

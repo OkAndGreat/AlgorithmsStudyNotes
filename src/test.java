@@ -9,34 +9,29 @@ public class test {
 }
 
 class Solution {
-    int[] vis;
-    int target;
     List<List<Integer>> res = new ArrayList();
-    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
-        this.target=target;
-        Arrays.sort(candidates);
-        vis=new int[candidates.length];
-        List<Integer> temp = new ArrayList();
-        for(int i=0;i<candidates.length;i++){
-            temp.add(candidates[i]);
-            dfs(i+1,temp,candidates[i],candidates);
-            temp.clear();
-        }
+    public List<List<Integer>> subsets(int[] nums) {
+        res.add(null);
+        dfs(nums);
         return res;
     }
 
-    void dfs(int idx,List<Integer> temp,int value,int[] candidates){
-        if(value==target){
-            res.add(new ArrayList(temp));
-            return;
+    void dfs(int[] nums){
+        List<Integer> temp = new ArrayList();
+        for(int i=0;i<nums.length;i++){
+            temp.add(nums[i]);
+            dfs(temp,nums,i);
+            temp.remove(temp.size()-1);
         }
-        if(value>target) return;
-        for(int i=idx;i<candidates.length;i++){
-            if(i>0&&candidates[i-1]==candidates[i]&&vis[i-1]==0) continue;
-            temp.add(candidates[i]);
-            value+=candidates[i];
-            dfs(i+1,temp,value,candidates);
-            value-=candidates[i];
+    }
+
+    void dfs(List<Integer> temp,int[] nums,int idx){
+        res.add(new ArrayList(temp));
+        if(idx==nums.length) return;
+        for(int i=idx;i<nums.length;i++){
+            dfs(temp,nums,i+1);
+            temp.add(nums[i]);
+            dfs(temp,nums,i+1);
             temp.remove(temp.size()-1);
         }
     }

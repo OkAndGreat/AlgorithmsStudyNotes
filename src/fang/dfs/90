@@ -20,19 +20,27 @@
 
 ````java
 class Solution {
-    List<List<Integer>> res = new ArrayList();
+    List<Integer> t = new ArrayList<Integer>();
+    List<List<Integer>> ans = new ArrayList<List<Integer>>();
 
     public List<List<Integer>> subsetsWithDup(int[] nums) {
-        return res;
+        Arrays.sort(nums);
+        dfs(false, 0, nums);
+        return ans;
     }
 
-    void dfs(int[] nums) {
-        List<Integer> temp = new ArrayList();
-        res.add(temp);
-    }
-
-    void dfs(int[] nums, List<Integer> temp, int idx) {
-
+    public void dfs(boolean choosePre, int cur, int[] nums) {
+        if (cur == nums.length) {
+            ans.add(new ArrayList<Integer>(t));
+            return;
+        }
+        dfs(false, cur + 1, nums);
+        if (!choosePre && cur > 0 && nums[cur - 1] == nums[cur]) {
+            return;
+        }
+        t.add(nums[cur]);
+        dfs(true, cur + 1, nums);
+        t.remove(t.size() - 1);
     }
 }
 ````

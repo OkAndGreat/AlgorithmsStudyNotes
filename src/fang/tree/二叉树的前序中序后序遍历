@@ -39,8 +39,10 @@ class Solution {
         while (!stack.isEmpty()) {
             TreeNode node = (TreeNode) stack.pop();
             res.add(node.val);
-            if (node.left != null) stack.push(node.left);
+            //注意顺序 因为栈的顺序是先进后出
+            //让自己在使用栈时始终有这个意识
             if (node.right != null) stack.push(node.right);
+            if (node.left != null) stack.push(node.left);
         }
         return res;
     }

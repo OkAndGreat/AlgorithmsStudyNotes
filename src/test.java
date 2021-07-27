@@ -8,9 +8,11 @@ public class test {
 
 }
 
+
 class Solution {
     List<List<Integer>> res = new ArrayList();
     public List<List<Integer>> subsets(int[] nums) {
+        Stack stack;
         res.add(null);
         dfs(nums);
         return res;

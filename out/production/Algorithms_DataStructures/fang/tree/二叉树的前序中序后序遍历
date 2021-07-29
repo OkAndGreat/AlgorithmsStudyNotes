@@ -1,0 +1,109 @@
+````java
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+//迭代法
+//前序遍历
+class Solution {
+    List<Integer> res = new ArrayList<Integer>();
+
+    public List<Integer> preorderTraversal(TreeNode root) {
+        
+        if (root == null) return res;
+        res.add(root.val);
+        preorderTraversal(root.left);
+        preorderTraversal(root.right);
+        return res;
+    }
+}
+//后序遍历
+class Solution {
+    public List<Integer> postorderTraversal(TreeNode root) {
+        //我们需要使用到双端队列的功能，所以声明为LinkedList
+        LinkedList<Integer> res = new LinkedList<>();
+        //如果根节点为空，那么就直接返回空的结果集，没遍历的必要了
+        if(root == null) return res;
+        //创建一个栈
+        Deque<TreeNode> stack = new LinkedList<>();
+        //将当前的根节点放入栈中
+        stack.push(root);
+        //如果当前的栈不为空，那就一直循环
+        while(!stack.isEmpty()){
+            root = stack.pop();
+            res.addFirst(root.val);
+            //因为后序是：左 → 右 → 根，上一行代码我们已经插入了根节点，所以接下来该再插入右结点，然后再插入左结点（注意，每次插入都是从结果集头部插入）
+            //所以右结点应该被先取出，左结点最后被取出
+            //根据栈的特性，最后被取出那就得先入栈，所以先将左结点入栈，然后是右结点入栈
+            if(root.left != null) stack.push(root.left);
+            if(root.right != null) stack.push(root.right);
+        }
+        return res;
+    }
+}
+
+//中序遍历
+//大致思路：从根节点开始，不断的将该节点的左结点入栈，直到左结点为空，然后从栈中取出该节点，将结点值存入结果集中，然后再指向当前节点的右结点。
+class Solution {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        //返回的结果集
+        List<Integer> res = new ArrayList<>();
+        //创建一个栈
+        Deque<TreeNode> stack = new LinkedList<>();
+        //如果当前节点不为空或者当前栈不为空，就继续循环
+        while(root != null || !stack.isEmpty()){
+            //如果当前节点不为空，就继续循环
+            //这个循环的目的是找到当前结点最左边的子结点
+            while(root != null){
+                //将当前结点压入栈
+                stack.push(root);
+                //调整root指向，指向左节点
+                root = root.left;
+            }
+            //从栈中取出结点
+            root = stack.pop();
+            //将该值添加进结果集
+            res.add(root.val);
+            //调整root指向，指向右节点
+            root = root.right;
+        }
+        return res;
+    }
+}
+
+
+
+//递归法
+
+class Solution {
+    List<Integer> res = new ArrayList<Integer>();
+    Stack stack = new Stack<TreeNode>();
+
+    public List<Integer> preorderTraversal(TreeNode root) {
+        if (root == null) return res;
+        stack.push(root);
+        while (!stack.isEmpty()) {
+            TreeNode node = (TreeNode) stack.pop();
+            res.add(node.val);
+            //注意顺序 因为栈的顺序是先进后出
+            //让自己在使用栈时始终有这个意识
+            if (node.right != null) stack.push(node.right);
+            if (node.left != null) stack.push(node.left);
+        }
+        return res;
+    }
+}
+
+
+````

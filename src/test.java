@@ -5,74 +5,66 @@ import java.util.*;
 public class test {
     public static void main(String[] args) {
         Solution solution = new Solution();
-        ListNode l1 = new ListNode(9);
-        ListNode l2 = new ListNode(9);
-        ListNode curL2 = l2;
-        curL2.next = new ListNode(9);
-        curL2 = curL2.next;
-        curL2.next = new ListNode(9);
-        curL2 = curL2.next;
-        curL2.next = new ListNode(9);
-        curL2 = curL2.next;
-        curL2.next = new ListNode(9);
-        curL2 = curL2.next;
-        curL2.next = new ListNode(9);
-        curL2 = curL2.next;
-        curL2.next = new ListNode(9);
-        curL2 = curL2.next;
-        curL2.next = new ListNode(9);
-        curL2 = curL2.next;
-        curL2.next = new ListNode(9);
-        curL2 = curL2.next;
-        curL2.next = new ListNode(1);
-
-
     }
 
 }
-
 class Solution {
-    ListNode node;
-    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        int val = getNodeVal(l1) + getNodeVal(l2);
-        node = new ListNode(val % 10);
-        val /= 10;
-        ListNode curNode = node;
-        while (val != 0) {
-            int num = val % 10;
-            curNode.next = new ListNode(num);
-            curNode = curNode.next;
-            val /= 10;
+    int[][] vis;
+    int res = 0;
+    boolean isOriDot;
+    public int numIslands(char[][] grid) {
+        vis = new int[grid.length][grid[0].length];
+        Stack stack = new Stack<dot>();
+        vis[0][0] = 1;
+        stack.push(new dot(0,0));
+        while(!stack.isEmpty()){
+            isOriDot = true;
+            dot curDot = (dot)stack.pop();
+            int curX = curDot.x;
+            int curY = curDot.y;
+            if(curX-1>=0){
+                if(vis[curX-1][curY] == 0){
+                    stack.push(grid[curX-1][curY]);
+                    vis[curX-1][curY] = 1;
+                }
+                if(grid[curX-1][curY] == 2) isOriDot=false;
+            }
+            if(curX+1<grid[0].length){
+                if(vis[curX+1][curY] == 0){
+                    stack.push(grid[curX+1][curY]);
+                    vis[curX+1][curY] = 1;
+                }
+                if(grid[curX+1][curY] == 2) isOriDot=false;
+            }
+            if(curY-1>=0){
+                if(vis[curX][curY-1] == 0){
+                    stack.push(grid[curX][curY-1]);
+                    vis[curX][curY-1] = 1;
+                }
+                if(grid[curX][curY-1] == 2) isOriDot=false;
+            }
+            if(curY+1<grid.length){
+                if(vis[curX][curY+1] == 0){
+                    stack.push(grid[curX][curY+1]);
+                    vis[curX][curY+1] = 1;
+                }
+                if(grid[curX][curY+1] == 2) isOriDot=false;
+            }
+            if(grid[curX][curY] == 1){
+                grid[curX][curY] = 2;
+                if(isOriDot == true) res++;
+            }
         }
-        return node;
-    }
-
-    int getNodeVal(ListNode node) {
-        int res = 0;
-        int a = 1;
-        do {
-            res += node.val * a;
-            a *= 10;
-            node = node.next;
-        } while (node != null);
         return res;
     }
 }
 
-class ListNode {
-    int val;
-    ListNode next;
-
-    ListNode() {
-    }
-
-    ListNode(int val) {
-        this.val = val;
-    }
-
-    ListNode(int val, ListNode next) {
-        this.val = val;
-        this.next = next;
+class dot {
+    int x;
+    int y;
+    dot(int x , int y){
+        this.x = x;
+        this.y = y;
     }
 }
 

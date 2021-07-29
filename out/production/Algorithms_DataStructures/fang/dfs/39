@@ -29,5 +29,41 @@ candidates中的数字可以无限制重复被选取。
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 
 ````java
+class Solution {
+    List<List<Integer>> res = new ArrayList();
+    int target;
 
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        this.target = target;
+        dfs(candidates);
+        return res;
+    }
+
+    void dfs(int[] candidates) {
+        List<Integer> temp = new ArrayList();
+        int value = 0;
+        for (int i = 0; i < candidates.length; i++) {
+            temp.add(candidates[i]);
+            value += candidates[i];
+            dfs(candidates, i, value, temp);
+            temp.remove(temp.indexOf(candidates[i]));
+            value -= candidates[i];
+        }
+    }
+
+    void dfs(int[] candidates, int idx, int value, List<Integer> temp) {
+        if (value == target) {
+            res.add(new ArrayList(temp));
+            return;
+        }
+        if (value > target) return;
+        for (int i = idx; i < candidates.length; i++) {
+            value += candidates[i];
+            temp.add(candidates[i]);
+            dfs(candidates, i, value, temp);
+            value -= candidates[i];
+            temp.remove(temp.indexOf(candidates[i]));
+        }
+    }
+}
 ````

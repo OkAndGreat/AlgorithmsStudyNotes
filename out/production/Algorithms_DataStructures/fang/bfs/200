@@ -1,0 +1,94 @@
+给你一个由 '1'（陆地）和 '0'（水）组成的的二维网格，请你计算网格中岛屿的数量。
+
+岛屿总是被水包围，并且每座岛屿只能由水平方向和/或竖直方向上相邻的陆地连接形成。
+
+此外，你可以假设该网格的四条边均被水包围。
+
+示例 1：
+
+输入：grid = [
+["1","1","1","1","0"],
+["1","1","0","1","0"],
+["1","1","0","0","0"],
+["0","0","0","0","0"]
+]
+输出：1 示例 2：
+
+输入：grid = [
+["1","1","0","0","0"],
+["1","1","0","0","0"],
+["0","0","1","0","0"],
+["0","0","0","1","1"]
+]
+输出：3
+
+提示：
+
+m == grid.length n == grid[i].length 1 <= m, n <= 300 grid[i][j] 的值为 '0' 或 '1' 通过次数285,752提交次数522,481
+
+来源：力扣（LeetCode） 链接：https://leetcode-cn.com/problems/number-of-islands
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+
+````java
+class Solution {
+    int[][] vis;
+    int res = 0;
+    boolean isOriDot;
+
+    public int numIslands(char[][] grid) {
+        vis = new int[grid.length][grid[0].length];
+        Stack stack = new Stack<dot>();
+        vis[0][0] = 1;
+        stack.push(new dot(0, 0));
+        while (!stack.isEmpty()) {
+            isOriDot = true;
+            dot curDot = (dot) stack.pop();
+            int curX = curDot.x;
+            int curY = curDot.y;
+            if (curX - 1 >= 0) {
+                if (vis[curX - 1][curY] == 0) {
+                    stack.push(grid[curX - 1][curY]);
+                    vis[curX - 1][curY] = 1;
+                }
+                if (grid[curX - 1][curY] == 2) isOriDot = false;
+            }
+            if (curX + 1 < grid[0].length) {
+                if (vis[curX + 1][curY] == 0) {
+                    stack.push(grid[curX + 1][curY]);
+                    vis[curX + 1][curY] = 1;
+                }
+                if (grid[curX + 1][curY] == 2) isOriDot = false;
+            }
+            if (curY - 1 >= 0) {
+                if (vis[curX][curY - 1] == 0) {
+                    stack.push(grid[curX][curY - 1]);
+                    vis[curX][curY - 1] = 1;
+                }
+                if (grid[curX][curY - 1] == 2) isOriDot = false;
+            }
+            if (curY + 1 < grid.length) {
+                if (vis[curX][curY + 1] == 0) {
+                    stack.push(grid[curX][curY + 1]);
+                    vis[curX][curY + 1] = 1;
+                }
+                if (grid[curX][curY + 1] == 2) isOriDot = false;
+            }
+            if (grid[curX][curY] == 1) {
+                grid[curX][curY] = 2;
+                if (isOriDot == true) res++;
+            }
+        }
+        return res;
+    }
+}
+
+class dot {
+    int x;
+    int y;
+
+    dot(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+}
+````

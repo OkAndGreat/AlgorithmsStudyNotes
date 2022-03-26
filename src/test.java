@@ -2,55 +2,40 @@ import java.util.*;
 
 public class test {
     public static void main(String[] args) {
-        System.out.println(new Solution().addStrings("456","77"));
-        int a = 1;
-        int b = 2;
-        a ^= b;
-        b ^= a;
-        a ^= b;
-
-        char c = '1';
-        if(c == '['){
-
-        }else if(c == ']'){
-
-        }else if(c >= '0' && c <= '9'){
-
-        }else{
-            System.out.println("hhh");
-        }
+        //[[1,2,3],[4,5,6],[7,8,9]]
+        int[][] a = new int[][]{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+        System.out.println(new Solution().findContinuousSequence(9));
     }
 
 }
 
 class Solution {
-    public String addStrings(String num1, String num2) {
-        int i = num1.length() - 1;
-        int j = num2.length() - 1;
+    public int[][] findContinuousSequence(int target) {
+        List<int[]> res = new ArrayList<>();
 
-        int res = 0;
-        int carry = 0;
-        int factor = 1;
-        while(i >= 0 && j >= 0){
-            int num = num1.charAt(i) - '0' + num2.charAt(j) - '0' + carry;
-            res += num % 10 * factor;
-            carry = num / 10;
-            factor *= 10;
-            i--;
-            j--;
-        }
-        while(i >= 0){
-            res += (num1.charAt(i) - '0') * factor;
-            factor *= 10;
-            i--;
-        }
-        while(j >= 0){
-            res += (num2.charAt(j) - '0') * factor;
-            factor *= 10;
-            j--;
+        int left = 1;
+        int right = 2;
+        int cur = 1;
+
+        while(right <= target / 2 + 1){
+            if(cur > target){
+                cur -= left;
+                left++;
+                continue;
+            }
+            if(cur == target){
+                int[] temp = new int[right - left];
+                int idx = 0;
+                for(int i = left;i < right;i++) temp[idx++] = i;
+                res.add(temp);
+                cur -= left;
+                left++;
+                continue;
+            }
+            cur += right;
+            right++;
         }
 
-        return Integer.toString(res);
+        return res.toArray(new int[res.size()][]);
     }
 }
-

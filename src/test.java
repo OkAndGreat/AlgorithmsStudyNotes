@@ -3,39 +3,38 @@ import java.util.*;
 public class test {
     public static void main(String[] args) {
         //[[1,2,3],[4,5,6],[7,8,9]]
-        int[][] a = new int[][]{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
-        System.out.println(new Solution().findContinuousSequence(9));
+        int[][] a = new int[][]{{3, 3}, {5,-1},{-2,4}};
+        StringBuilder sb = new StringBuilder();
+        System.out.println(new Solution().generateParenthesis(1));
     }
+
+
 
 }
 
 class Solution {
-    public int[][] findContinuousSequence(int target) {
-        List<int[]> res = new ArrayList<>();
+    List<String> res = new ArrayList();
+    public List<String> generateParenthesis(int n) {
+        dfs(n,n,0,new StringBuilder());
+        return res;
+    }
 
-        int left = 1;
-        int right = 2;
-        int cur = 1;
-
-        while(right <= target / 2 + 1){
-            if(cur > target){
-                cur -= left;
-                left++;
-                continue;
-            }
-            if(cur == target){
-                int[] temp = new int[right - left];
-                int idx = 0;
-                for(int i = left;i < right;i++) temp[idx++] = i;
-                res.add(temp);
-                cur -= left;
-                left++;
-                continue;
-            }
-            cur += right;
-            right++;
+    void dfs(int left,int right,int leftNeed,StringBuilder sb){
+        if(leftNeed > 0) return;
+        if(left == 0 && right == 0) res.add(sb.toString());
+        if(left > 0){
+            sb.append("(");
+            left--;
+            leftNeed--;
+            dfs(left,right,leftNeed,sb);
+            sb.deleteCharAt(sb.length() - 1);
         }
-
-        return res.toArray(new int[res.size()][]);
+        if(right > 0){
+            sb.append(")");
+            right--;
+            leftNeed++;
+            dfs(left,right,leftNeed,sb);
+            sb.deleteCharAt(sb.length() - 1);
+        }
     }
 }

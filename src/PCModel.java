@@ -31,5 +31,12 @@ public class PCModel {
             }
         }
     }
+
+    class Producer extends Thread{
+        @Override
+        public void run() {
+            super.run();
+        }
+    }
 }
 

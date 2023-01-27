@@ -21,9 +21,10 @@ public class QuickSort {
         String date1Str = simpleDateFormat.format(data1);
         System.out.println("排序前的时间是=" + date1Str);
 
+        shuffle(arr);
         //测试冒泡排序
 //        sort(arr, 0, arr.length - 1);
-        sort(arr,0, arr.length - 1);
+        Quicksort(arr, 0, arr.length - 1);
 
         Date data2 = new Date();
         String date2Str = simpleDateFormat.format(data2);
@@ -38,52 +39,46 @@ public class QuickSort {
 
     //平均时间复杂度和最好时间复杂度 Onlog2n  最坏时间复杂度 On2
     public static void sort(int[] arr, int l, int r) {
-        if(l >= r) return;
+        if (l >= r) return;
 
         int temp = arr[l];
         int left = l;
         int right = r;
-        while(left < right){
-            while(left < right && arr[right] > temp) right--;
+        while (left < right) {
+            while (left < right && arr[right] > temp) right--;
             arr[left] = arr[right];
-            while(left < right && arr[left] <= temp) left++;
+            while (left < right && arr[left] <= temp) left++;
             arr[right] = arr[left];
         }
         arr[left] = temp;
-        sort(arr,l,left-1);
-        sort(arr,left+1,r);
+        sort(arr, l, left - 1);
+        sort(arr, left + 1, r);
     }
 
-    public static void Quicksort(int[] arr,int l,int r){
-        if(l >= r) return;
-        int p = l;
-        int q = r;
-        int temp = arr[p];
-        while(p != q){
-            while(arr[q] <= temp && p != q) q--;
-            arr[p] = arr[q];
-            while (arr[p] > temp && p != q) p++;
-            arr[q] = arr[p];
+    public static void Quicksort(int[] arr, int l, int r) {
+        if (l >= r) return;
+        int left = l;
+        int right = r;
+        int temp = arr[l];
+
+        while (l < r) {
+            while (l < r && arr[r] > temp) r--;
+            arr[l] = arr[r];
+            while (l < r && arr[l] <= temp) l++;
+            arr[r] = arr[l];
         }
-        arr[p] = temp;
-        Quicksort(arr,l,p - 1);
-        Quicksort(arr,p + 1,r);
+        arr[l] = temp;
+        Quicksort(arr, left, l - 1);
+        Quicksort(arr, l + 1, right);
     }
 
-    //得到 [min.max]内的整数
-    public static int getRandowNum(int min,int max){
+    public static void shuffle(int[] nums) {
         Random random = new Random();
-        int j = random.nextInt(max - min + 1);
-        j = j + min;
-        return j;
-    }
-
-    public static void shuffle(int[] nums){
-        for(int i = 0;i < nums.length;i++){
-            int j = getRandowNum(i,nums.length - 1);
-            int temp = nums[i];
-            nums[i] = nums[j];
-            nums[j] = temp;
+        for (int i = 0; i < nums.length; i++) {
+            int index = i + random.nextInt(nums.length - i);
+            nums[i] ^= nums[index];
+            nums[index] ^= nums[i];
+            nums[i] ^= nums[index];
         }
     }
 }
